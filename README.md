@@ -4,9 +4,11 @@ Rate My Professors ratings beside instructor names in NJIT Course Schedule and P
 
 ## Install
 
-**Chrome / Helium:** Extract `NJITxRMP-chrome.zip`, open `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and choose the extracted folder. If building locally, choose `dist/chrome`.
+**Chrome:** Extract `NJITxRMP-chrome.zip`, open `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and choose the extracted folder. If building locally, choose `dist/chrome`.
 
-**Firefox:** [Install NJITxRMP from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/njitxrmp/).
+**Firefox:** 
+[Install NJITxRMP from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/njitxrmp/).
+From source: Extract `NJITxRMP-firefox.zip`, open `about:debugging#/runtime/this-firefox`, select **Load Temporary Add-on**, and choose `manifest.json`. This lasts until Firefox exits. Permanent installation requires a Mozilla-signed XPI.
 
 ## Use
 
