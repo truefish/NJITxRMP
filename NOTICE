@@ -1,0 +1,13 @@
+NJITxRMP
+
+Based on the concept and behavior of RMPExtension:
+https://github.com/Vineetsridhar/RMPExtension
+Copyright 2020 Vineet Sridhar
+Upstream README declares the Apache License, Version 2.0.
+
+NJITxRMP replaces the original extension and backend implementation with a
+new TypeScript WebExtension implementation. Modified work: 2026.
+Distributed under the Apache License, Version 2.0; see LICENSE.
+
+Neither NJIT nor Rate My Professors endorses this project. Ratings remain
+attributed to Rate My Professors. No upstream icons or demo media are included.

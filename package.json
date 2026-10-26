@@ -1,0 +1,16 @@
+{
+  "name": "njitxrmp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "build": "node scripts/build.mjs",
+    "package": "npm run build && node scripts/package.mjs"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.0",
+    "esbuild": "^0.28.2",
+    "fflate": "^0.8.2",
+    "typescript": "^5.8.0"
+  }
+}

@@ -1,0 +1,32 @@
+name: Sign Firefox for self-distribution
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'GitHub release version to sign (first release: 1.0.0)'
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_VERSION: ${{ inputs.release_version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check && npm run build
+      - name: Request Mozilla unlisted signing
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: npx --yes web-ext@10.8.0 sign --source-dir dist/firefox --artifacts-dir signed --channel unlisted
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NJITxRMP-signed-firefox
+          path: signed/*.xpi
