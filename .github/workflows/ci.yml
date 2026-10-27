@@ -1,24 +1,33 @@
 name: Verify and release
 on:
   push:
-    branches: ['**']
-    tags: ['v*']
+    branches: [main]
   pull_request:
+    branches: [main]
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+  queue: max
 permissions:
   contents: read
 jobs:
   verify:
     runs-on: ubuntu-latest
-    env:
-      RELEASE_VERSION: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || '' }}
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
       - run: npm ci
       - run: npm run check
+      - name: Select next release version
+        if: github.event_name == 'push'
+        run: node scripts/next-version.mjs
       - run: npm run package
       - uses: actions/upload-artifact@v4
         with:
@@ -35,31 +44,14 @@ jobs:
           name: NJITxRMP-source
           path: releases/NJITxRMP-source.zip
           if-no-files-found: error
-  release:
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: verify
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - uses: actions/download-artifact@v4
-        with:
-          name: NJITxRMP-chrome
-          path: dist/chrome
-      - uses: actions/download-artifact@v4
-        with:
-          name: NJITxRMP-firefox
-          path: dist/firefox
-      - run: node scripts/package.mjs
-      - name: Create draft GitHub release
+      - name: Publish tagged release
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          TAG: ${{ github.ref_name }}
-        run: gh release create "$TAG" releases/*.zip --draft --generate-notes
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" releases/*.zip --clobber
+          else
+            gh release create "$RELEASE_TAG" releases/*.zip --target "$GITHUB_SHA" --title "NJITxRMP $RELEASE_TAG" --generate-notes --latest
+          fi

@@ -4,7 +4,7 @@ Rate My Professors ratings beside instructor names in NJIT Course Schedule and P
 
 ## Install
 
-[Download the latest build](https://github.com/truefish/NJITxRMP/actions/workflows/ci.yml?query=branch%3Amain+is%3Asuccess), either **NJITxRMP-chrome** or **NJITxRMP-firefox** found under **Artifacts**.
+[Download the latest release](https://github.com/truefish/NJITxRMP/releases/latest).
 
 ### Firefox
 

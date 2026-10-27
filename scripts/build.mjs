@@ -1,7 +1,7 @@
 import { build } from 'esbuild';
 import { mkdir, writeFile, copyFile } from 'node:fs/promises';
-const version = process.env.RELEASE_VERSION?.replace(/^v/, '') || '0.0.0';
-if (!/^\d+\.\d+\.\d+$/.test(version)) throw new Error('RELEASE_VERSION must be a numeric three-part version.');
+const version = process.env.RELEASE_VERSION?.replace(/^v/, '') || '1.0.0';
+if (!/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(version) || version.split('.').some(part => Number(part) > 65535) || version.split('.').every(part => Number(part) === 0)) throw new Error('RELEASE_VERSION must contain three integers from 0 to 65535, without leading zeros, and cannot be all zero.');
 for (const browser of ['chrome', 'firefox']) {
   const outdir = `dist/${browser}`; await mkdir(outdir, { recursive: true });
   await build({ entryPoints: ['src/background.ts', 'src/content.ts'], outdir, bundle: true, minify: true, format: 'iife', target: ['chrome120', 'firefox140'], legalComments: 'none' });
