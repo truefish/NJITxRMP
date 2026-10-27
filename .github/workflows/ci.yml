@@ -22,8 +22,19 @@ jobs:
       - run: npm run package
       - uses: actions/upload-artifact@v4
         with:
-          name: NJITxRMP-packages
-          path: releases/*.zip
+          name: NJITxRMP-chrome
+          path: dist/chrome/*
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NJITxRMP-firefox
+          path: dist/firefox/*
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NJITxRMP-source
+          path: releases/NJITxRMP-source.zip
+          if-no-files-found: error
   release:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: verify
@@ -31,10 +42,21 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
       - uses: actions/download-artifact@v4
         with:
-          name: NJITxRMP-packages
-          path: releases
+          name: NJITxRMP-chrome
+          path: dist/chrome
+      - uses: actions/download-artifact@v4
+        with:
+          name: NJITxRMP-firefox
+          path: dist/firefox
+      - run: node scripts/package.mjs
       - name: Create draft GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
