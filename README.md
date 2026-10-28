@@ -10,11 +10,21 @@ Rate My Professors ratings beside instructor names in NJIT Course Schedule and P
 
 [Install NJITxRMP from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/njitxrmp/).
 
-For temporary installation from the ZIP: Extract `NJITxRMP-firefox.zip`, open `about:debugging#/runtime/this-firefox`, select **Load Temporary Add-on**, and choose `manifest.json`. This lasts until Firefox exits.
+For temporary installation from the ZIP:
+1. Download **NJITxRMP-firefox.zip** from [GitHub Releases](https://github.com/truefish/NJITxRMP/releases). 
+2. Extract the ZIP to a folder you'll keep
+3. Open `about:debugging#/runtime/this-firefox`.
+4. Select **Load Temporary Add-on**.
+5. Open the folder you extracted the contents of the zip file to, and select `manifest.json`.
+
+This lasts until Firefox exits.
 
 ### Chrome
 
-1. Download **NJITxRMP-chrome.zip** from [GitHub Releases](https://github.com/truefish/NJITxRMP/releases), or **NJITxRMP-chrome** from the [latest development builds](https://github.com/truefish/NJITxRMP/actions/workflows/ci.yml?query=branch%3Amain+is%3Asuccess).
+[Install NJITxRMP from the Chrome Web Store](https://chromewebstore.google.com/detail/njitxrmp/iobppldfaemjlfgmkamaoekppgcnplpe).
+
+For temporary installation from the ZIP:
+1. Download **NJITxRMP-chrome.zip** from [GitHub Releases](https://github.com/truefish/NJITxRMP/releases).
 2. Extract the ZIP to a folder you will keep.
 3. Open `chrome://extensions` and enable **Developer mode**.
 4. Click **Load unpacked** and select the extracted folder containing `manifest.json`.
